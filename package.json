@@ -1,15 +1,12 @@
 {
-  "name": "brickzz",
+  "name": "BrickOut",
   "version": "1.0.0",
   "description": "Brick Breaker Game",
   "main": "NA",
   "repository": {
     "type": "git",
-    "url": "NA"
+    "url": "https://github.com/Geetchopra/BrickOut"
   },
-  "keywords": [
-    "NA"
-  ],
   "author": "Geet Chopra",
   "license": "UNLICENSED",
   "devDependencies": {

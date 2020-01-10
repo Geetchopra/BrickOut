@@ -1,4 +1,4 @@
-import {BrickOut} from "./main-scene";
+import {BrickOut} from "./Scenes/main-scene";
 import * as Phaser from 'phaser';
 
 var config : Phaser.Types.Core.GameConfig = {
