@@ -97,7 +97,8 @@ export class BrickOut extends Phaser.Scene {
 	}
 
 	hit_brick(ball : Ball, brick : Brick) : void {
-		this.score_text.setText("Score: " + brick.hit());
+		this.score += brick.hit();
+		this.score_text.setText("Score: " + this.score);
 		if (this.check_win())
 			this.win();
 	}
