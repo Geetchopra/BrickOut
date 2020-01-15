@@ -49,14 +49,14 @@ export class Power_Up extends Phaser.Physics.Arcade.Sprite {
 
 	apply(paddle : Paddle) : void {
 		this.disable();
-		if (this.power_type == "enlarge") {
+		if (this.power_type == "leaf") {
 			paddle.enlarge();
 			this.scene.time.delayedCall(10000, function () {
 				paddle.shrink();
 			}, [], this.scene);
 		}
-		else if (this.power_type == "invulnerable") {
-			let bar = this.scene.physics.add.sprite(0, 1230, "super_bar").setOrigin(0,0);
+		else if (this.power_type == "flower") {
+			let bar = this.scene.physics.add.sprite(60, 1265, "super_bar").setOrigin(0,0);
 			this.scene.physics.add.collider(this.scene.children.getByName("Ball"), bar, null, null, this);
     		bar.setImmovable();
     		this.scene.time.delayedCall(10000, function () {

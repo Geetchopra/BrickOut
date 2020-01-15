@@ -6,8 +6,6 @@ import {Helper} from "./../Helpers/helper";
 
 export class BrickOut extends Phaser.Scene {
 	private bricks : Array<Brick> = [];
-	private colour : string[] = ["none", "pink", "yellow", "green", "red", "blue"];
-	private power_ups : string[] = ["enlarge", "multi_ball", "invulnerable"];
 	private paddle : Paddle;
 	private ball : Ball;
 	private score_text : Phaser.GameObjects.Text;
@@ -18,14 +16,15 @@ export class BrickOut extends Phaser.Scene {
 	private helper : Helper = new Helper();
 
 	preload() : void {
-		let assets : Array<string> = ["super_bar", "you_win", "you_lose", "invulnerable", "green_ball", "enlarge", "multi_ball", "blue_brick", "red_brick", "yellow_brick", "green_brick", "pink_brick", "ball", "paddle", "background"];
+		let assets : Array<string> = ["red_brick", "super_bar", "you_win", "you_lose", "flower", "drop", "leaf", "blue_brick", "yellow_brick", "green_brick", "ball", "paddle", "background"];
 		for (var i = 0; i < assets.length; i++) {
 			this.load.image(assets[i], "Assets/" + assets[i] + ".png");
 		}
+		this.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 	}
 
 	create() : void {
-		this.physics.world.setBoundsCollision(true, true, true, false);
+		this.physics.world.setBounds(65, 65, 715, 1275, true, true, true, false);
 		this.init_UI();
 		this.init_paddle();
 		this.init_bricks();
@@ -44,8 +43,8 @@ export class BrickOut extends Phaser.Scene {
 	}
 
 	init_bricks() : void {
-		let brick_x : number = 72;
-	    let brick_y : number = 100;
+		let brick_x : number = 132;
+	    let brick_y : number = 150;
 	    let brick_colour : string;
 	    for (var i = 0; i < 5; i++) {
 	        for (var j = 0; j < 9; j++) {
@@ -55,18 +54,18 @@ export class BrickOut extends Phaser.Scene {
 	            this.bricks.push(brick);
 	            brick_x += 64;
 	        }
-	        brick_x = 72;
+	        brick_x = 132;
 	        brick_y += 32;
 	    }
 	}
 
 	init_paddle() : void {
-		this.paddle = new Paddle({scene: this, x: 296, y: 1200, key: 'paddle'});
+		this.paddle = new Paddle({scene: this, x: 356, y: 1230, key: 'paddle'});
 		this.paddle.init();
 	}
 
 	init_ball() : void {
-		this.ball = new Ball({scene: this, x: 347.5, y: 1150, key: 'ball'});
+		this.ball = new Ball({scene: this, x: this.paddle.x + 51.5, y: this.paddle.y - 50, key: 'ball'});
 		this.ball.init();
 	}
 
@@ -82,8 +81,8 @@ export class BrickOut extends Phaser.Scene {
 		this.lives = 3;
 		this.full_reset = false;
 		this.add.image(0, 0, 'background').setOrigin(0, 0);
-		this.score_text = this.add.text(34, 30, "Score: " + this.score, {font : "18px Arial"});
-    	this.lives_text = this.add.text(619, 30, "Lives: " + this.lives, {font : "18px Arial"});
+		this.score_text = this.add.text(350, 20, "Score: " + this.score, {fill: "#fbd063", font : "30px Baloo Bhai", stroke : "#42210b", strokeThickness: "5"});
+    	this.lives_text = this.add.text(360, 1345, "Lives: " + this.lives, {fill: "#fbd063", font : "30px Baloo Bhai", stroke : "#42210b", strokeThickness: "5"});
 	}
 
 	input_manager() : void {
@@ -120,7 +119,7 @@ export class BrickOut extends Phaser.Scene {
 		let retry : Phaser.GameObjects.Image;
 		this.full_reset = true;
 		this.input.disable(this.paddle);
-		retry = this.physics.add.sprite(0, 400, "you_lose").setOrigin(0, 0).setInteractive();
+		retry = this.physics.add.sprite(60, 460, "you_lose").setOrigin(0, 0).setInteractive();
 		retry.on('pointerup', () => {
 			this.input.enable(this.paddle);
 			retry.destroy();
@@ -145,7 +144,7 @@ export class BrickOut extends Phaser.Scene {
 
 	win() : void {
 		let sprite : Phaser.GameObjects.Image;
-		sprite = this.add.image(0, 400, "you_win").setOrigin(0, 0).setScale(0);
+		sprite = this.add.image(60, 460, "you_win").setOrigin(0, 0).setScale(0);
 		let tween;
 
 		this.ball.disable();
@@ -160,5 +159,7 @@ export class BrickOut extends Phaser.Scene {
     	});
 	}
 }
+
+
 
 

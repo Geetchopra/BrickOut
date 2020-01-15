@@ -4,8 +4,8 @@ import * as Phaser from 'phaser';
 var config : Phaser.Types.Core.GameConfig = {
     title: "BrickOut",
     type: Phaser.AUTO,
-    width: 720,
-    height: 1280,
+    width: 840,
+    height: 1400,
     physics: {
         default: 'arcade',
         arcade: {
@@ -16,3 +16,4 @@ var config : Phaser.Types.Core.GameConfig = {
 };
 
 var game = new Phaser.Game(config);
+

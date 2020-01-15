@@ -30,7 +30,7 @@ export class Paddle extends Phaser.Physics.Arcade.Sprite {
 	}
 
 	input_callback(pointer, ball) : void {
-		this.x = Phaser.Math.Clamp(pointer.x-64, 0, 720-128);
+		this.x = Phaser.Math.Clamp(pointer.x-64, 65, 840 - 80 - 128);
         if (ball.is_on_paddle())
         {
             ball.x = this.x+51;

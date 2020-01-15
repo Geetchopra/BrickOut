@@ -22,14 +22,14 @@ export class Ball extends Phaser.Physics.Arcade.Sprite {
 	}
 
 	out_of_bounds() : boolean {
-		return this.y >= 1210;
+		return this.y >= 1270;
 	}
 
 	reset(paddle_x : number) : void {
 		this.setVelocity(0, 0);
 		this.on_paddle = true;
 		this.enableBody(false, 0, 0, true, true);
-		this.setPosition(paddle_x + 51, 1150);
+		this.setPosition(paddle_x + 51, 1180);
 	}
 
 	disable() : void {

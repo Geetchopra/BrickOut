@@ -5,8 +5,7 @@ import {Helper} from "./../Helpers/helper";
 
 export class Brick extends Phaser.Physics.Arcade.Sprite {
 
-	private colour : string[] = ["none", "pink", "yellow", "green", "red", "blue"];
-	private power_ups : string[] = ["enlarge", "multi_ball", "invulnerable"];
+	private colour : string[] = ["none", "yellow", "red", "green", "blue"];
 	private current_colour : string;
 	private original_colour : string;
 	private helper : Helper;

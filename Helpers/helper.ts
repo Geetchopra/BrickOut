@@ -1,6 +1,6 @@
 export class Helper {
-	private colour : string[] = ["none", "pink", "yellow", "green", "red", "blue"];
-	private power_ups : string[] = ["enlarge", "multi_ball", "invulnerable"];
+	private colour : string[] = ["none", "yellow", "red", "green", "blue"];
+	private power_ups : string[] = ["leaf", "flower", "drop"];
 
 	get_power_up(num: number) : string {
 		if (num >= 0.00 && num <= 0.10) {
@@ -10,7 +10,8 @@ export class Helper {
 			return this.power_ups[1];
 		}
 		else if (num > 0.20 && num <= 0.30) {
-			return this.power_ups[2];
+			//return this.power_ups[2]; Power up not implemented yet
+			return "none";
 		}
 		else {
 			return "none";
@@ -18,20 +19,17 @@ export class Helper {
 	}
 
 	get_colour(num : number) : string {
-		if (num >= 0.00 && num <= 0.30) {
+		if (num >= 0.00 && num <= 0.50) {
 	        return this.colour[1];
 	    }
-	    else if (num > 0.30 && num <= 0.55) {
+	    else if (num > 0.50 && num <= 0.75) {
 	        return this.colour[2];
 	    }
-	    else if (num > 0.55 && num <= 0.75) {
+	    else if (num > 0.75 && num <= 0.90) {
 	        return this.colour[3];
 	    }
-	    else if (num > 0.75 && num <= 0.90) {
-	        return this.colour[4];
-	    }
 	    else if (num > 0.90 && num <= 1.00) {
-	        return this.colour[5];
+	        return this.colour[4];
 	    }
 	}
 }
