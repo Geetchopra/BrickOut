@@ -18,7 +18,10 @@
     "webpack-cli": "^3.3.10"
   },
   "scripts": {
-  "build": "webpack",
-  "start": "webpack --watch & live-server --port=3000"
+    "build": "webpack",
+    "start": "webpack --watch & live-server --port=3000"
+  },
+  "dependencies": {
+    "npm": "^6.13.6"
   }
 }

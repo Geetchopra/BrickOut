@@ -1,6 +1,7 @@
 import {BrickOut} from "./Scenes/main-scene";
 import * as Phaser from 'phaser';
 
+//Game configuration object
 var config : Phaser.Types.Core.GameConfig = {
     title: "BrickOut",
     type: Phaser.AUTO,
@@ -15,5 +16,6 @@ var config : Phaser.Types.Core.GameConfig = {
     scene: [BrickOut]
 };
 
+//Initialize a new game. This is the entry point for the Phaser app.
 var game = new Phaser.Game(config);
 

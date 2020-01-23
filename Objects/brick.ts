@@ -4,14 +4,16 @@ import {Paddle} from "./paddle";
 import {Helper} from "./../Helpers/helper";
 
 export class Brick extends Phaser.Physics.Arcade.Sprite {
-
 	private colour : string[] = ["none", "yellow", "red", "green", "blue"];
-	private current_colour : string;
-	private original_colour : string;
+	private current_colour : string; //For keeping track of current state in the game.
+	private original_colour : string; //Used for resetting the game. Keeps track of the original state of the brick.
 	private helper : Helper;
-	private power : Power_Up;
-	private dead : boolean; 
+	private power : Power_Up; //Holds the power up of the brick
+	private dead : boolean;  
 
+	/*
+		Adds the object to the current scene. Also initializes key attributes.
+	*/
 	constructor(params) {
 		super (params.scene, params.x, params.y, params.key);
 		this.current_colour = params.key.replace("_brick", "");
@@ -21,6 +23,10 @@ export class Brick extends Phaser.Physics.Arcade.Sprite {
 		this.dead = false;
 	}
 
+	/*
+		Initializes different properties of the brick and adds a power up to 
+		the brick based on what the helper function returns.
+	*/
 	init() : void {
 	    this.original_colour = this.current_colour;
 	    this.setOrigin(0, 0);
@@ -34,14 +40,26 @@ export class Brick extends Phaser.Physics.Arcade.Sprite {
 	    this.setImmovable();	    
 	}
 
+	/*
+		Callback invoked on collision between the paddle and a power up. Calls the 
+		apply function of this.power.
+	*/
 	apply_power(power: Power_Up, paddle : Paddle) : void {
-		this.power.apply(paddle);
+		// Commented code is under development.
+		// if (this.power.get_type() == "drop") {
+		// 	this.power.disable();
+		// 	let axe = this.scene.physics.add.sprite(paddle.x + 51.5, paddle.y - 50, "ball").setOrigin(0,0);
+		// 	axe.setVelocity(0, -1000);
+		// }
+		// else {
+			this.power.apply(paddle);
+		// }
 	}
 
-	update() : void {
-
-	}
-
+	/*
+		Sets the colour to the original colour and makes the brick visible in the scene.
+		Also resets the power up if there is one.
+	*/
 	reset() : void {
 		this.setTexture(this.original_colour + "_brick");
 		this.current_colour = this.original_colour;
@@ -51,6 +69,9 @@ export class Brick extends Phaser.Physics.Arcade.Sprite {
 	    	this.power.reset();
 	}
 
+	/*
+		Disables the body of the brick and sets it as dead.
+	*/
 	disable() : void {
 		this.disableBody(true, true);
 		this.dead = true;
@@ -60,6 +81,10 @@ export class Brick extends Phaser.Physics.Arcade.Sprite {
 		return this.dead;
 	}
 
+	/*
+		Main logic describing what happens when a brick is hit.
+		Returns a score of 10 if the brick was not destroyed and 35 otherwise. 
+	*/
 	hit() : number {
 		let index : number = this.colour.indexOf(this.current_colour);
 		let score : number;
