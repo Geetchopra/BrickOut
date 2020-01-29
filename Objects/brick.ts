@@ -1,6 +1,7 @@
 import * as Phaser from 'phaser';
 import {Power_Up} from "./power_up";
 import {Paddle} from "./paddle";
+import {Ball} from "./ball";
 import {Helper} from "./../Helpers/helper";
 
 export class Brick extends Phaser.Physics.Arcade.Sprite {
@@ -9,7 +10,8 @@ export class Brick extends Phaser.Physics.Arcade.Sprite {
 	private original_colour : string; //Used for resetting the game. Keeps track of the original state of the brick.
 	private helper : Helper;
 	private power : Power_Up; //Holds the power up of the brick
-	private dead : boolean;  
+	private dead : boolean; 
+	private ball : Ball; //Reference to the ball for power up manipulations
 
 	/*
 		Adds the object to the current scene. Also initializes key attributes.
@@ -27,7 +29,8 @@ export class Brick extends Phaser.Physics.Arcade.Sprite {
 		Initializes different properties of the brick and adds a power up to 
 		the brick based on what the helper function returns.
 	*/
-	init() : void {
+	init(ball : Ball) : void {
+		this.ball = ball;
 	    this.original_colour = this.current_colour;
 	    this.setOrigin(0, 0);
 	    let power_up = this.helper.get_power_up(Math.random());
@@ -45,15 +48,7 @@ export class Brick extends Phaser.Physics.Arcade.Sprite {
 		apply function of this.power.
 	*/
 	apply_power(power: Power_Up, paddle : Paddle) : void {
-		// Commented code is under development.
-		// if (this.power.get_type() == "drop") {
-		// 	this.power.disable();
-		// 	let axe = this.scene.physics.add.sprite(paddle.x + 51.5, paddle.y - 50, "ball").setOrigin(0,0);
-		// 	axe.setVelocity(0, -1000);
-		// }
-		// else {
-			this.power.apply(paddle);
-		// }
+		this.power.apply(paddle, this.ball);
 	}
 
 	/*

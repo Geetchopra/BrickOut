@@ -1,6 +1,7 @@
 import * as Phaser from 'phaser';
 import {Paddle} from "./paddle";
 import {Ball} from "./ball";
+import {Brick} from "./brick";
 
 export class Power_Up extends Phaser.Physics.Arcade.Sprite {
 	private original_x : number; //For resetting its x position
@@ -64,23 +65,40 @@ export class Power_Up extends Phaser.Physics.Arcade.Sprite {
 		of power up.
 		Leaf - Enlarges paddle for 10 seconds.
 		Flower - Grants invulnerability, i.e. creates a bar on the screen spanning
-		the length of the entire board.
+		the length of the entire board for 10 seconds.
+		Bomb - Freezes paddle for 10 seconds.
 		More under development!!
 	*/
-	apply(paddle : Paddle) : void {
+	apply(paddle : Paddle, ball : Ball) : void {
 		this.disable();
+		//Leaf - Enlarge paddle
 		if (this.power_type == "leaf") {
 			paddle.enlarge();
 			this.scene.time.delayedCall(10000, function () {
 				paddle.shrink();
 			}, [], this.scene);
 		}
+		//Flower - Invulnerability
 		else if (this.power_type == "flower") {
 			let bar = this.scene.physics.add.sprite(60, 1265, "super_bar").setOrigin(0,0);
 			this.scene.physics.add.collider(this.scene.children.getByName("Ball"), bar, null, null, this);
     		bar.setImmovable();
     		this.scene.time.delayedCall(10000, function () {
 				bar.destroy();
+			}, [], this.scene);
+		}
+		//Bomb - Freeze Paddle
+		else if (this.power_type == "bomb") {
+			paddle.freeze();
+			this.scene.time.delayedCall(5000, function () {
+				paddle.unfreeze();
+			}, [], this.scene);
+		}
+		//Power Drop - Speeds up the ball
+		else if (this.power_type == "drop") {
+			ball.enlarge();
+			this.scene.time.delayedCall(10000, function () {
+				ball.shrink();
 			}, [], this.scene);
 		}
 	}

@@ -19,7 +19,7 @@ export class BrickOut extends Phaser.Scene {
 		Load all assets into the game for use
 	*/
 	preload() : void {
-		let assets : Array<string> = ["red_brick", "super_bar", "you_win", "you_lose", "flower", "drop", "leaf", "blue_brick", "yellow_brick", "green_brick", "ball", "paddle", "background"];
+		let assets : Array<string> = ["bomb", "frozen_paddle", "red_brick", "super_bar", "you_win", "you_lose", "flower", "drop", "leaf", "blue_brick", "yellow_brick", "green_brick", "ball", "paddle", "background"];
 		for (var i = 0; i < assets.length; i++) {
 			this.load.image(assets[i], "Assets/" + assets[i] + ".png");
 		}
@@ -62,7 +62,7 @@ export class BrickOut extends Phaser.Scene {
 	        	//Get random colour and generate brick
 	        	brick_colour = this.helper.get_colour(Math.random());
 	            let brick = new Brick({scene: this, x: brick_x, y: brick_y, key: brick_colour + "_brick"});
-	            brick.init();
+	            brick.init(this.ball);
 	            this.bricks.push(brick);
 
 	            //Add a collider between the ball and the brick
@@ -83,10 +83,13 @@ export class BrickOut extends Phaser.Scene {
 		this.add.image(0, 0, 'background').setOrigin(0, 0);
 		
 		this.score = 0;
-		this.score_text = this.add.text(350, 20, "Score: " + this.score, {fill: "#fbd063", font : "30px Baloo Bhai", stroke : "#42210b", strokeThickness: "5"});
-    	
     	this.lives = 3;
-    	this.lives_text = this.add.text(360, 1345, "Lives: " + this.lives, {fill: "#fbd063", font : "30px Baloo Bhai", stroke : "#42210b", strokeThickness: "5"});
+
+    	//Delayed call to ensure that the font has loaded properly!
+    	this.time.delayedCall(500, function () {
+    		this.score_text = this.add.text(350, 20, "Score: " + this.score, {fill: "#fbd063", font : "30px Baloo Bhai", stroke : "#42210b", strokeThickness: "5"});
+    		this.lives_text = this.add.text(360, 1345, "Lives: " + this.lives, {fill: "#fbd063", font : "30px Baloo Bhai", stroke : "#42210b", strokeThickness: "5"});
+    	}, [], this);
 	}
 
 	/*

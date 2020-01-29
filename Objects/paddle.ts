@@ -26,6 +26,8 @@ export class Paddle extends Phaser.Physics.Arcade.Sprite {
 		Activates the body of the paddle to make it visible and interactable again.
 	*/
 	reset() : void {
+		this.shrink();
+		this.unfreeze();
 		this.enableBody(false, 0, 0, true, true);
 	}
 
@@ -62,5 +64,23 @@ export class Paddle extends Phaser.Physics.Arcade.Sprite {
 	*/
 	shrink() : void {
 		this.setScale(1, 1);
+	}
+
+	/*
+		Freeze the paddle - Make it immovable and update texture to 
+		display a visual indicator of the same
+	*/
+	freeze() : void {
+		this.removeInteractive();
+		this.setTexture("frozen_paddle");
+	}
+
+	/*
+		Unfreeze the paddle - Make it movable again and update texture
+		to original.
+	*/
+	unfreeze() : void {
+		this.setInteractive({draggable: true});
+		this.setTexture("paddle");
 	}
 }

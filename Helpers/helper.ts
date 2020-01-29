@@ -4,7 +4,7 @@
 
 export class Helper {
 	private colour : string[] = ["none", "yellow", "red", "green", "blue"];
-	private power_ups : string[] = ["leaf", "flower", "drop"];
+	private power_ups : string[] = ["leaf", "flower", "bomb", "drop"];
 
 	/*
 		Return a random power up from the array above, assuming an equal weight
@@ -19,8 +19,10 @@ export class Helper {
 			return this.power_ups[1];
 		}
 		else if (num > 0.20 && num <= 0.30) {
-			//DROP is being implemented
-			return "none" //return this.power_ups[2];
+			return this.power_ups[2];
+		}
+		else if (num > 0.30 && num <= 0.40) {
+			return this.power_ups[3];
 		}
 		else {
 			return "none";

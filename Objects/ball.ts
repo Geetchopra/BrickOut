@@ -34,6 +34,7 @@ export class Ball extends Phaser.Physics.Arcade.Sprite {
 		Activates body and makes it interactable again.
 	*/
 	reset(paddle_x : number) : void {
+		this.shrink();
 		this.setVelocity(0, 0);
 		this.on_paddle = true;
 		this.enableBody(false, 0, 0, true, true);
@@ -57,12 +58,12 @@ export class Ball extends Phaser.Physics.Arcade.Sprite {
 	    if (this.x < paddle_x)
 	    {
 	        diff = paddle_x - this.x;
-	        this.setVelocity(-10 * diff, -500);
+	        this.setVelocity(-10 * diff, this.body.velocity.y);
 	    }
 	    else if (this.x >= paddle_x)
 	    {
 	        diff = this.x - paddle_x;
-	        this.setVelocity(10 * diff, -500);
+	        this.setVelocity(10 * diff, this.body.velocity.y);
 	    }
 	}
 
@@ -72,12 +73,31 @@ export class Ball extends Phaser.Physics.Arcade.Sprite {
 	input_callback(pointer) : void {
 		if (this.on_paddle)
         {
-            this.setVelocity(-75, -500);
+        	//Randomize the direction in which the ball shoots.
+        	let x : number = Math.random() * 100;
+        	let y : number = Math.pow(-1, Math.floor(x));
+            this.setVelocity(x*y, -600);
             this.on_paddle = false;
         }
 	}
 
 	is_on_paddle() : boolean {
 		return this.on_paddle;
+	}
+
+	/*
+		Enlarges the ball
+	*/
+	enlarge() : void {
+		this.setScale(2.5);
+	}
+
+	/*
+		Shrinks the ball to its original size.
+		This function is not supposed to actually 'shrink' the ball, 
+		it is used only in conjunction with enlarge().
+	*/
+	shrink() : void {
+		this.setScale(1);
 	}
 }
