@@ -58,12 +58,12 @@ export class Ball extends Phaser.Physics.Arcade.Sprite {
 	    if (this.x < paddle_x)
 	    {
 	        diff = paddle_x - this.x;
-	        this.setVelocity(-10 * diff, this.body.velocity.y);
+	        this.setVelocity(-5 * diff, this.body.velocity.y);
 	    }
 	    else if (this.x >= paddle_x)
 	    {
 	        diff = this.x - paddle_x;
-	        this.setVelocity(10 * diff, this.body.velocity.y);
+	        this.setVelocity(5 * diff, this.body.velocity.y);
 	    }
 	}
 

@@ -2,6 +2,8 @@ import * as Phaser from 'phaser';
 import {Ball} from './ball';
 
 export class Paddle extends Phaser.Physics.Arcade.Sprite {
+	private is_frozen : boolean; 
+
 	/*
 		Adds the object to the current scene.
 	*/
@@ -20,6 +22,7 @@ export class Paddle extends Phaser.Physics.Arcade.Sprite {
     	this.setImmovable();
     	this.setInteractive({draggable: true});
     	this.setName("Paddle");
+    	this.is_frozen = false;
 	}
 
 	/*
@@ -27,7 +30,8 @@ export class Paddle extends Phaser.Physics.Arcade.Sprite {
 	*/
 	reset() : void {
 		this.shrink();
-		this.unfreeze();
+		if (this.is_frozen)
+			this.unfreeze();
 		this.enableBody(false, 0, 0, true, true);
 	}
 
@@ -68,16 +72,17 @@ export class Paddle extends Phaser.Physics.Arcade.Sprite {
 
 	/*
 		Freeze the paddle - Make it immovable and update texture to 
-		display a visual indicator of the same
+		display a visual indicator of the same if change_texture is true.
 	*/
 	freeze() : void {
 		this.removeInteractive();
 		this.setTexture("frozen_paddle");
+		this.is_frozen = true;
 	}
 
 	/*
 		Unfreeze the paddle - Make it movable again and update texture
-		to original.
+		to original if change_texture is true.
 	*/
 	unfreeze() : void {
 		this.setInteractive({draggable: true});

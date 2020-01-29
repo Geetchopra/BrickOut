@@ -164,12 +164,12 @@ export class BrickOut extends Phaser.Scene {
 		this.full_reset = true;
 
 		//Disable input on the paddle so it can't be moved.
-		this.input.disable(this.paddle);
+		this.paddle.removeInteractive();
 
 		//Add a retry button
 		let retry : Phaser.GameObjects.Image = this.physics.add.sprite(60, 460, "you_lose").setOrigin(0, 0).setInteractive();
 		retry.on('pointerup', () => {
-			this.input.enable(this.paddle);
+			this.paddle.setInteractive({draggable: true});
 			retry.destroy();
 		});
 	}
@@ -180,7 +180,7 @@ export class BrickOut extends Phaser.Scene {
 	*/
 	reset_game() : void {
 		this.lives_text.setText("Lives: " + (this.lives));
-
+		console.log("reset");
 		//Only reset UI elements when all lives are lost
 	    if (this.full_reset) {
 	        this.lives = 3;
