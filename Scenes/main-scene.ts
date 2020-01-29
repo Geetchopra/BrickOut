@@ -152,7 +152,7 @@ export class BrickOut extends Phaser.Scene {
 		Callback invoked on collision between the ball and the paddle.
 	*/
 	hit_paddle(ball : Ball, paddle : Paddle) : void {
-		ball.hit(paddle.x);
+		ball.hit(paddle);
 	}
 
 	/*
@@ -180,7 +180,7 @@ export class BrickOut extends Phaser.Scene {
 	*/
 	reset_game() : void {
 		this.lives_text.setText("Lives: " + (this.lives));
-		console.log("reset");
+
 		//Only reset UI elements when all lives are lost
 	    if (this.full_reset) {
 	        this.lives = 3;

@@ -1,4 +1,5 @@
 import * as Phaser from 'phaser';
+import {Paddle} from "./paddle";
 
 export class Ball extends Phaser.Physics.Arcade.Sprite {
 	private on_paddle : boolean; //To check if the ball is on the paddle.
@@ -49,21 +50,23 @@ export class Ball extends Phaser.Physics.Arcade.Sprite {
 	}
 
 	/*
-		Logic for what to do when the ball hits the paddle.
-		Used same math logic as the Breakout game at 
-		https://phaser.io/examples/v3/view/games/breakout/breakout
+		Contains logic for what to do when the ball hits the paddle.
 	*/
-	hit(paddle_x : number) : void {
+	hit(paddle : Paddle) : void {
 		var diff : number = 0;
-	    if (this.x < paddle_x)
-	    {
-	        diff = paddle_x - this.x;
-	        this.setVelocity(-5 * diff, this.body.velocity.y);
+
+		//Check position of ball w.r.t. the paddle.
+	    diff = Math.abs(this.x - paddle.x);
+
+	    //Ball hit at a position before the center of the paddle.
+	    if (diff < 64 * paddle.scaleX)
+	    {	
+	        this.setVelocityX(-5 * (diff + (64 * paddle.scaleX)));
 	    }
-	    else if (this.x >= paddle_x)
+	    //Ball hit at a position after the center of the paddle.
+	    else if (diff >= 64 * paddle.scaleX)
 	    {
-	        diff = this.x - paddle_x;
-	        this.setVelocity(5 * diff, this.body.velocity.y);
+	        this.setVelocityX(5 * diff);
 	    }
 	}
 
